@@ -3,12 +3,14 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/joho/godotenv"
 )
 
 type Todo struct {
-	ID        int    `json:"id`
+	ID        int    `json:"id"`
 	Completed bool   `json:"completed"`
 	Body      string `json:"body"`
 }
@@ -16,6 +18,14 @@ type Todo struct {
 func main() {
 	fmt.Print("Hello World")
 	app := fiber.New()
+
+	err := godotenv.Load(".env")
+
+	if err != nil {
+		log.Fatal("Error loading env file  ", err)
+	}
+
+	PORT := os.Getenv("PORT")
 
 	todos := []Todo{}
 
@@ -68,5 +78,5 @@ func main() {
 		return c.Status(404).JSON(fiber.Map{"error": "An error occured while deleting todo"})
 	})
 
-	log.Fatal(app.Listen(":8080"))
+	log.Fatal(app.Listen(":" + PORT))
 }
