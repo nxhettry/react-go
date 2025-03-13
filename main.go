@@ -1,16 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+
+	"github.com/gofiber/fiber/v2"
+)
 
 func main() {
 	fmt.Print("Hello World")
 
-	var myName string = "Nishan"
+	app := fiber.New()
 
-	const myCaste string = "Gautam"
-
-	myThirdNamme := "Nishan Vai"
-
-	fmt.Print(myName, myCaste, myThirdNamme)
-
+	log.Fatal(app.Listen(":8080"))
 }
